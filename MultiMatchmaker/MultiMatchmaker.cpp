@@ -8,9 +8,10 @@
 #include <fstream> // read and write to files
 #include <vector> // store the string
 #include <sstream>// stringstream
+#include "Dictionary.h"
 using namespace std;
 
-vector<string> readRecordFromFile(string file_name)
+vector<string> readPlayersFromFile(string file_name)
 {
     vector<string> record;
 
@@ -31,13 +32,17 @@ vector<string> readRecordFromFile(string file_name)
         cout << skillLevel << endl;
     }
 
+    file.close();
+
     return record;
 }
 
 
 int main()
 {
-    vector<string> Champion = readRecordFromFile("../Champions.csv");
+    Dictionary players;
+
+    vector<string> Champion = readPlayersFromFile("../Players.csv");
 
     return 0;
 }
