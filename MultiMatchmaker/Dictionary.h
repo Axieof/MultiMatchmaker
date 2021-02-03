@@ -2,11 +2,12 @@
 
 #include<string>
 #include<iostream>
+#include "Player.h"
 using namespace std;
 
 const int MAX_SIZE = 101;
 typedef string KeyType;
-typedef string ItemType;
+typedef Player ItemType;
 
 
 class Dictionary

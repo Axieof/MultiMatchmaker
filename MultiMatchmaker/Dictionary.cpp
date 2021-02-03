@@ -1,4 +1,6 @@
 #include "Dictionary.h"
+using namespace std;
+
 Dictionary::Dictionary() {
 	size = 0;
 	for (int i = 0; i < MAX_SIZE; i++) {
@@ -117,21 +119,25 @@ void Dictionary::remove(KeyType key) {
 ItemType Dictionary::get(KeyType key) {
 	int pos = hash(key);
 	Node* temp = items[pos];
+	if (temp->key == key)
+	{
+		return temp->item;
+	}
+		
 	if (temp == NULL) {
 		cout << "\nCannot get item, key does not exist.\n";
-		return "";
+		return Player();
 	}
-	while (temp->next != NULL) {
-		if (temp->key == key) {
-			return temp->item;
+	else 
+	{
+		while (temp->next != NULL) {
+			if (temp->key == key) {
+				return temp->item;
+			}
+			temp = temp->next;
 		}
-		temp = temp->next;
-	}
-	if (temp->key == key)
-		return temp->item;
-	else {
 		cout << "\nCannot get item, key does not exist.\n";
-		return "";
+		return Player();
 	}
 }
 
@@ -150,7 +156,10 @@ void Dictionary::print() {
 			cout << "Index " << i << ": \n";
 			Node* temp = items[i];
 			while (true) {
-				cout << "{ " << temp->key << " : " << temp->item << " } ";
+				cout << "{ " << temp->key << " : " << temp->item.getUsername() << " } ";
+				cout << "{ " << temp->key << " : " << temp->item.getmatchCount() << " } ";
+				cout << "{ " << temp->key << " : " << temp->item.getwinRate() << " } ";
+				cout << "{ " << temp->key << " : " << temp->item.getskillLevel() << " } ";
 				if (temp->next == NULL)
 					break;
 				temp = temp->next;

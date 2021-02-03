@@ -9,40 +9,49 @@
 #include <vector> // store the string
 #include <sstream>// stringstream
 #include "Dictionary.h"
+#include "Player.h"
 using namespace std;
 
-vector<string> readPlayersFromFile(string file_name)
+void readPlayersFromFile(string file_name, Dictionary &players)
 {
-    vector<string> record;
-
     ifstream file;
     file.open(file_name);
 
     string name, matchCount, winRate, skillLevel;
+    int count = 0;
 
-    while (getline(file, name))
+    while (getline(file, name, ','))
     {
-        getline(file, matchCount);
-        getline(file, winRate);
+        count += 1;
+        getline(file, matchCount, ',');
+        getline(file, winRate, ',');
         getline(file, skillLevel);
 
-        cout << name << endl;
-        cout << matchCount << endl;
-        cout << winRate << endl;
-        cout << skillLevel << endl;
+        if (count > 1)
+        {
+            int MatchCount = stol(matchCount);
+            int WinRate = stol(winRate);
+            int SkillLevel = stol(skillLevel);
+
+            cout << "Name: " << name << endl;
+            cout << "MatchCount: " << MatchCount << endl;
+            cout << "WinRate: " << WinRate << endl;
+            cout << "SkillLevel: " << SkillLevel << endl;
+
+            Player temp = Player(name, MatchCount, WinRate, SkillLevel);
+            players.add(name, temp);
+        }
     }
-
     file.close();
-
-    return record;
 }
 
 
 int main()
 {
     Dictionary players;
+    readPlayersFromFile("../Players.csv", players);
 
-    vector<string> Champion = readPlayersFromFile("../Players.csv");
+    players.print();
 
     return 0;
 }
