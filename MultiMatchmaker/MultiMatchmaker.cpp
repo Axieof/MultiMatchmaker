@@ -27,7 +27,6 @@ void readPlayersFromFile(string file_name, Dictionary &players)
         getline(file, matchCount, ',');
         getline(file, winRate, ',');
         getline(file, skillLevel);
-    }
 
         if (count > 1)
         {
@@ -45,8 +44,6 @@ void readPlayersFromFile(string file_name, Dictionary &players)
         }
     }
     file.close();
-
-    return record;
 }
 
 vector<Champion> initChampions(string file_name)
@@ -84,8 +81,6 @@ int main()
     Dictionary players;
     readPlayersFromFile("../Players.csv", players);
 
-    vector<string> Player = readPlayersFromFile("../Players.csv", players);
-
     vector<Champion> championList = initChampions("../Champions.csv");
 
     for (int i = 0; i < championList.size(); i++)
@@ -98,7 +93,6 @@ int main()
         cout << championList[i].getRange() << endl;
         cout << "------------------------------" << endl;
     }
-   
 
     return 0;
 }
