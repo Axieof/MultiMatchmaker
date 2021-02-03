@@ -143,12 +143,12 @@
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="MultiMatchmaker.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Queue.cpp" />
+    <ClCompile Include="List.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dictionary.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Queue.h" />
+    <ClInclude Include="List.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

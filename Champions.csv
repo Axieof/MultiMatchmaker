@@ -1,3 +1,8 @@
-IGN	MatchCount	Winrate	Skill
-Axieof	420	69%	124
-Calebanana	500	40%	150
+Type,Attack,HP,Healing,Mobility,Range
+Assassin,95,400,3,7,7
+Fighter,75,700,3,5,3
+Enchanter,45,550,9,8,6
+Mage,50,450,8,6,8
+Marksman,90,400,5,6,10
+Support,35,350,10,9,5
+Tank,30,1000,3,4,2
