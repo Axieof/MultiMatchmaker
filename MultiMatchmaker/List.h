@@ -1,6 +1,8 @@
 #pragma once
 #include<string>
 #include<iostream>
+#include "Champion.h"
+#include "Player.h"
 using namespace std;
 
 typedef string ItemType;
@@ -10,12 +12,14 @@ class List
 private:
 	struct Node
 	{
-		ItemType item;	// data item
+		//Player player;
+		//Champion champion;
+		ItemType item;
 		Node* next;	// pointer pointing to next item
 	};
 
 	Node* firstNode;	// point to the first item
-	int  size;			// number of items in the list
+	int size;			// number of items in the list
 
 public:
 	List();			// constructor
