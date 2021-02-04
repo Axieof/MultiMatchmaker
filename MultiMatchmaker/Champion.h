@@ -12,6 +12,7 @@ private:
 	int Range;
 
 public:
+	Champion();
 	Champion(string type, int attack, int hp, int healing, int mobility, int range);
 
 	string getType();
@@ -20,4 +21,6 @@ public:
 	int getHealing();
 	int getMobility();
 	int getRange();
+
+	void print();
 };

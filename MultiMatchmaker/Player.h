@@ -24,5 +24,7 @@ class Player
 		int getwinRate();
 
 		int getskillLevel();
+
+		void print();
 };
 

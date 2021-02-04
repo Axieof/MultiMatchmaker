@@ -85,13 +85,8 @@ int main()
 
     for (int i = 0; i < championList.size(); i++)
     {
-        cout << championList[i].getType() << endl;
-        cout << championList[i].getAttack() << endl;
-        cout << championList[i].getHp() << endl;
-        cout << championList[i].getHealing() << endl;
-        cout << championList[i].getMobility() << endl;
-        cout << championList[i].getRange() << endl;
-        cout << "------------------------------" << endl;
+        championList[i].print();
+        cout << "--------------------" << endl;
     }
 
     return 0;

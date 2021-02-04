@@ -38,3 +38,10 @@ int Player::getskillLevel()
 {
 	return skilllevel;
 }
+
+void Player::print() {
+	cout << "Username: " << username << endl;
+	cout << "Match Count: " << matchcount << endl;
+	cout << "Win Rate: " << winrate << endl;
+	cout << "Skill Level: " << skilllevel << endl;
+}
