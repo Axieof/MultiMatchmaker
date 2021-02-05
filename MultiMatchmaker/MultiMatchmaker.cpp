@@ -20,28 +20,34 @@ void readPlayersFromFile(string file_name, Dictionary &players)
     ifstream file;
     file.open(file_name);
 
-    string name, matchCount, winRate, skillLevel;
+    string name, matchCount, matchesWon, matchesLoss, winRate, skillLevel;
     int count = 0;
 
     while (getline(file, name, ','))
     {
         count += 1;
         getline(file, matchCount, ',');
+        getline(file, matchesWon, ',');
+        getline(file, matchesLoss, ',');
         getline(file, winRate, ',');
         getline(file, skillLevel);
 
         if (count > 1)
         {
             int MatchCount = stol(matchCount);
+            int MatchesWon = stol(matchesWon);
+            int MatchesLoss = stol(matchesLoss);
             int WinRate = stol(winRate);
             int SkillLevel = stol(skillLevel);
 
             cout << "Name: " << name << endl;
             cout << "MatchCount: " << MatchCount << endl;
+            cout << "MatchesWon: " << MatchesWon << endl;
+            cout << "MatchesLoss: " << MatchesLoss << endl;
             cout << "WinRate: " << WinRate << endl;
             cout << "SkillLevel: " << SkillLevel << endl;
 
-            Player temp = Player(name, MatchCount, WinRate, SkillLevel);
+            Player temp = Player(name, MatchCount, MatchesWon, MatchesLoss, WinRate, SkillLevel);
             players.add(name, temp);
         }
     }

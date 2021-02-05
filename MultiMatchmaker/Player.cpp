@@ -6,10 +6,12 @@ Player::Player()
 
 }
 
-Player::Player(string _username, int _matchcount, int _winrate, int _skilllevel)
+Player::Player(string _username, int _matchcount, int _matchwon, int _matchloss, int _winrate, int _skilllevel)
 {
 	username = _username;
 	matchcount = _matchcount;
+	matchloss = _matchloss;
+	matchwon = _matchwon;
 	winrate = _winrate;
 	skilllevel = _skilllevel;
 }
@@ -29,6 +31,16 @@ int Player::getmatchCount()
 	return matchcount;
 }
 
+int Player::getMatchWon()
+{
+	return matchloss;
+}
+
+int Player::getMatchLoss()
+{
+	return matchloss;
+}
+
 int Player::getwinRate()
 {
 	return winrate;
@@ -42,6 +54,8 @@ int Player::getskillLevel()
 void Player::print() {
 	cout << "Username: " << username << endl;
 	cout << "Match Count: " << matchcount << endl;
+	cout << "Match Won: " << matchwon << endl;
+	cout << "Match Loss: " << matchloss << endl;
 	cout << "Win Rate: " << winrate << endl;
 	cout << "Skill Level: " << skilllevel << endl;
 }
