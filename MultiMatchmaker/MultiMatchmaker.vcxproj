@@ -148,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Champion.h" />
+    <ClInclude Include="Colours.h" />
     <ClInclude Include="Dictionary.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="List.h" />

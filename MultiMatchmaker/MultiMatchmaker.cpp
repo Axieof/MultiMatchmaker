@@ -13,6 +13,7 @@
 #include "Dictionary.h"
 #include "Champion.h"
 #include "Player.h"
+#include "Colours.h"
 using namespace std;
 
 void readPlayersFromFile(string file_name, Dictionary &players)
@@ -77,8 +78,8 @@ vector<Champion> initChampions(string file_name)
     return champions;
 }
 
-void displayChampionSelection(vector<Champion> championList) {
-    cout << "\033[33m" << "---------------- Select a Champion ----------------" << "\033[0m" << endl;
+void getChampionSelection(vector<Champion> championList, Champion& selectedChampion) {
+    cout << BOLDYELLOW << "---------------- Select a Champion ----------------" << WHITE << endl;
     cout << right << setw(2) << "#" << " |" << left << setw(10) << "Type" << "|" << left << setw(7) << "Attack" << "|" << left << setw(5) << "Hp" << "|" << left << setw(5) << "Heal" << "|" << left << setw(9) << "Mobility" << "|" << left << setw(6) << "Range" << endl;
     cout << "---|----------|-------|-----|-----|---------|------" << endl;
 
@@ -91,8 +92,19 @@ void displayChampionSelection(vector<Champion> championList) {
         cout << left << setw(5) << championList[i].getHeal() << "|";
         cout << left << setw(9) << championList[i].getMobility() << "|";
         cout << left << setw(6) << championList[i].getRange() << endl;
-        
     }
+
+
+    cout << "Select champion [1-7]: ";
+    int index;
+    cin >> index;
+    while (!(index >= 1 && index <= 7)) {
+        cout << BOLDRED << "Invalid input! Please try again!" << RESET << endl;
+        cout << "Select champion [1-7]: ";
+        cin >> index;
+    }
+    selectedChampion = championList[index - 1];
+    cout << BOLDGREEN << "You have selected: " << selectedChampion.getType() << RESET << endl;
 }
 
 int main()
@@ -104,14 +116,10 @@ int main()
 
     vector<Champion> championList = initChampions("../Champions.csv");
 
-    displayChampionSelection(championList);
+    Champion selectedChampion;
+    getChampionSelection(championList, selectedChampion);
     
+    selectedChampion.print();
     
-    /*for (int i = 0; i < championList.size(); i++)
-    {
-        championList[i].print();
-        cout << "--------------------" << endl;
-    }*/
-
     return 0;
 }
