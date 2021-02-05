@@ -4,10 +4,12 @@
 
 // Imports
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <fstream> // read and write to files
 #include <vector> // store the string
 #include <sstream>// stringstream
+#include <stdio.h>
 #include "Dictionary.h"
 #include "Champion.h"
 #include "Player.h"
@@ -75,19 +77,41 @@ vector<Champion> initChampions(string file_name)
     return champions;
 }
 
+void displayChampionSelection(vector<Champion> championList) {
+    cout << "\033[33m" << "---------------- Select a Champion ----------------" << "\033[0m" << endl;
+    cout << right << setw(2) << "#" << " |" << left << setw(10) << "Type" << "|" << left << setw(7) << "Attack" << "|" << left << setw(5) << "Hp" << "|" << left << setw(5) << "Heal" << "|" << left << setw(9) << "Mobility" << "|" << left << setw(6) << "Range" << endl;
+    cout << "---|----------|-------|-----|-----|---------|------" << endl;
+
+    for (int i = 0; i < championList.size(); i++) {
+        
+        cout << right << setw(2) << i + 1 << " |";
+        cout << left << setw(10) << championList[i].getType() << "|";
+        cout << left << setw(7) << championList[i].getAttack() << "|";
+        cout << left << setw(5) << championList[i].getHp() << "|";
+        cout << left << setw(5) << championList[i].getHeal() << "|";
+        cout << left << setw(9) << championList[i].getMobility() << "|";
+        cout << left << setw(6) << championList[i].getRange() << endl;
+        
+    }
+}
 
 int main()
 {
     Dictionary players;
     readPlayersFromFile("../Players.csv", players);
 
+    cout << "--------------------------" << endl << endl;
+
     vector<Champion> championList = initChampions("../Champions.csv");
 
-    for (int i = 0; i < championList.size(); i++)
+    displayChampionSelection(championList);
+    
+    
+    /*for (int i = 0; i < championList.size(); i++)
     {
         championList[i].print();
         cout << "--------------------" << endl;
-    }
+    }*/
 
     return 0;
 }

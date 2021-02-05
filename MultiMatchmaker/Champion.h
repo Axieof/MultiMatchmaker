@@ -7,18 +7,18 @@ private:
 	string Type;
 	int Attack;
 	int Hp;
-	int Healing;
+	int Heal;
 	int Mobility;
 	int Range;
 
 public:
 	Champion();
-	Champion(string type, int attack, int hp, int healing, int mobility, int range);
+	Champion(string type, int attack, int hp, int Heal, int mobility, int range);
 
 	string getType();
 	int getAttack();
 	int getHp();
-	int getHealing();
+	int getHeal();
 	int getMobility();
 	int getRange();
 
