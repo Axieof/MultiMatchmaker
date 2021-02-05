@@ -158,6 +158,8 @@ void Dictionary::print() {
 			while (true) {
 				cout << "{ " << temp->key << " : " << temp->item.getUsername() << " } ";
 				cout << "{ " << temp->key << " : " << temp->item.getmatchCount() << " } ";
+				cout << "{ " << temp->key << " : " << temp->item.getMatchWon() << " } ";
+				cout << "{ " << temp->key << " : " << temp->item.getMatchLoss() << " } ";
 				cout << "{ " << temp->key << " : " << temp->item.getwinRate() << " } ";
 				cout << "{ " << temp->key << " : " << temp->item.getskillLevel() << " } ";
 				if (temp->next == NULL)
