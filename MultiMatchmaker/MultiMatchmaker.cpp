@@ -121,9 +121,9 @@ int MainMenu()
     cout << "2) Select an Account" << endl;
     cout << "3) Select a Champion" << endl;
     cout << "4) See Player Stats" << endl;
-    cout << "4) Join a Queue" << endl;
-    cout << "5) Queue Status" << endl;
-    cout << "6) Leave Queue" << endl;
+    cout << "5) Join a Queue" << endl;
+    cout << "6) Queue Status" << endl;
+    cout << "7) Leave Queue" << endl;
     cout << "0) Leave Game" << endl << endl;
 
     cout << "Enter an option: ";
@@ -226,6 +226,11 @@ int main()
             }
 
             case 6:
+            {
+
+            }
+
+            case 7:
             {
 
             }
