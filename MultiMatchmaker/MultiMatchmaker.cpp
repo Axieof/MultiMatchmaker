@@ -132,7 +132,7 @@ int MainMenu()
     return option;
 }
 
-void CreateAccount(Dictionary players)
+Player CreateAccount(Dictionary &players)
 {
     string username;
     cout << BOLDYELLOW << "----------------- Create a new Account -----------------" << WHITE << endl << endl;
@@ -143,14 +143,22 @@ void CreateAccount(Dictionary players)
     Player newPlayer = Player(username, 0, 0, 0, 0, 0);
     players.add(username, newPlayer);
     cout << "\nNew Account Created Successfully!" << endl << endl;
+    return newPlayer;
 }
 
-void SelectAccount()
+Player SelectAccount(Dictionary &players)
 {
+    string selected;
     cout << BOLDYELLOW << "---------------- Select an Account ----------------" << WHITE << endl;
     cout << right << setw(2) << "#" << " |" << left << setw(15) << "Username" << "|" << left << setw(13) << "Match Count" << "|" << left << setw(4) << "Won" << "|" << left << setw(5) << "Loss" << "|" << left << setw(9) << "Win Rate" << "|" << left << setw(13) << "Skill Level" << endl;
     cout << "---|---------------|-------------|----|-----|---------|------" << endl;
+    players.printPlayers();
 
+    cout << "\nSelect an account name: ";
+    cin >> selected;
+
+    Player selectedPlayer = players.get(selected);
+    return selectedPlayer;
 }
 
 
@@ -159,6 +167,7 @@ int main()
     //Initializations
     Dictionary players;
     Champion selectedChampion;
+    Player currentPlayer;
     bool continueLoop = true;
     bool accountSelected = false;
 
@@ -183,7 +192,7 @@ int main()
             case 1:
             {
                 // Create a new account
-                CreateAccount(players);
+                currentPlayer = CreateAccount(players);
                 accountSelected = true;
                 continue;
             }
@@ -191,7 +200,7 @@ int main()
             case 2:
             {
                 // Select an account
-                SelectAccount();
+                currentPlayer = SelectAccount(players);
                 accountSelected = true;
                 continue;
             }
@@ -217,7 +226,9 @@ int main()
 
             case 4:
             {
-
+                cout << BOLDYELLOW << "---------------- Player stats ----------------" << WHITE << endl << endl;
+                currentPlayer.print();
+                cout << "" << endl;
             }
 
             case 5:

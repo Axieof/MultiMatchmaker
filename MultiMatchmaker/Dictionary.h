@@ -69,6 +69,8 @@ public:
 	// display the items in the Dictionary
 	void print();
 
+	void printPlayers();
+
 	// void replace(KeyType key, ItemType item);
 	// bool contains(KeyType key);
 };

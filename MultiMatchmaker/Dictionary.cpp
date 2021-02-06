@@ -1,3 +1,4 @@
+#include <iomanip>
 #include "Dictionary.h"
 using namespace std;
 
@@ -170,4 +171,21 @@ void Dictionary::print() {
 		}
 	}
 	cout << "\n";
+}
+
+void Dictionary::printPlayers()
+{
+	for (int i = 0; i < MAX_SIZE; i++) {
+		if (items[i] != NULL)
+		{
+			Node* temp = items[i];
+			cout << right << setw(2) << i << " |";
+			cout << left << setw(15) << temp->item.getUsername() << "|";
+			cout << left << setw(13) << temp->item.getmatchCount() << "|";
+			cout << left << setw(4) << temp->item.getMatchWon() << "|";
+			cout << left << setw(5) << temp->item.getMatchLoss() << "|";
+			cout << left << setw(9) << temp->item.getwinRate() << "|";
+			cout << left << setw(13) << temp->item.getskillLevel() << endl;
+		}
+	}
 }
