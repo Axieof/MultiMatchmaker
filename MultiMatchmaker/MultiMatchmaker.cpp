@@ -41,12 +41,12 @@ void readPlayersFromFile(string file_name, Dictionary &players)
             int WinRate = stol(winRate);
             int SkillLevel = stol(skillLevel);
 
-            cout << "Name: " << name << endl;
-            cout << "MatchCount: " << MatchCount << endl;
-            cout << "MatchesWon: " << MatchesWon << endl;
-            cout << "MatchesLoss: " << MatchesLoss << endl;
-            cout << "WinRate: " << WinRate << endl;
-            cout << "SkillLevel: " << SkillLevel << endl;
+            //cout << "Name: " << name << endl;
+            //cout << "MatchCount: " << MatchCount << endl;
+            //cout << "MatchesWon: " << MatchesWon << endl;
+            //cout << "MatchesLoss: " << MatchesLoss << endl;
+            //cout << "WinRate: " << WinRate << endl;
+            //cout << "SkillLevel: " << SkillLevel << endl;
 
             Player temp = Player(name, MatchCount, MatchesWon, MatchesLoss, WinRate, SkillLevel);
             players.add(name, temp);
@@ -110,22 +110,133 @@ void getChampionSelection(vector<Champion> championList, Champion& selectedChamp
         cin >> index;
     }
     selectedChampion = championList[index - 1];
-    cout << BOLDGREEN << "You have selected: " << selectedChampion.getType() << RESET << endl;
+    cout << BOLDGREEN << "\nYou have selected: " << selectedChampion.getType() << RESET << endl << endl;
 }
+
+int MainMenu()
+{
+    int option;
+    cout << BOLDYELLOW << "----------------- Welcome Player! -----------------" << WHITE << endl << endl;
+    cout << "1) Create an Account" << endl;
+    cout << "2) Select an Account" << endl;
+    cout << "3) Select a Champion" << endl;
+    cout << "4) See Player Stats" << endl;
+    cout << "4) Join a Queue" << endl;
+    cout << "5) Queue Status" << endl;
+    cout << "6) Leave Queue" << endl;
+    cout << "0) Leave Game" << endl << endl;
+
+    cout << "Enter an option: ";
+    cin >> option;
+    cout << "" << endl;
+    return option;
+}
+
+void CreateAccount(Dictionary players)
+{
+    string username;
+    cout << BOLDYELLOW << "----------------- Create a new Account -----------------" << WHITE << endl << endl;
+
+    cout << "Enter username: ";
+    cin >> username;
+
+    Player newPlayer = Player(username, 0, 0, 0, 0, 0);
+    players.add(username, newPlayer);
+    cout << "\nNew Account Created Successfully!" << endl << endl;
+}
+
+void SelectAccount()
+{
+    cout << BOLDYELLOW << "---------------- Select an Account ----------------" << WHITE << endl;
+    cout << right << setw(2) << "#" << " |" << left << setw(15) << "Username" << "|" << left << setw(13) << "Match Count" << "|" << left << setw(4) << "Won" << "|" << left << setw(5) << "Loss" << "|" << left << setw(9) << "Win Rate" << "|" << left << setw(13) << "Skill Level" << endl;
+    cout << "---|---------------|-------------|----|-----|---------|------" << endl;
+
+}
+
 
 int main()
 {
+    //Initializations
     Dictionary players;
+    Champion selectedChampion;
+    bool continueLoop = true;
+    bool accountSelected = false;
+
+    //Reading CSV Data
     readPlayersFromFile("../Players.csv", players);
-
-    cout << "--------------------------" << endl << endl;
-
     vector<Champion> championList = initChampions("../Champions.csv");
 
-    Champion selectedChampion;
-    getChampionSelection(championList, selectedChampion);
+    //Calling Main Menu Option
+    while (continueLoop)
+    {
+        int option = MainMenu();
+
+        switch (option)
+        {
+            case 0:
+            {
+                //Exit Game
+                continueLoop = false;
+                break;
+            }
+                
+            case 1:
+            {
+                // Create a new account
+                CreateAccount(players);
+                accountSelected = true;
+                continue;
+            }
+                
+            case 2:
+            {
+                // Select an account
+                SelectAccount();
+                accountSelected = true;
+                continue;
+            }
+
+            case 3:
+            {
+                //Select a champion
+
+                if (accountSelected)
+                {
+                    getChampionSelection(championList, selectedChampion);
+                    selectedChampion.print();
+                    cout << "" << endl;
+                    continue;
+                }
+                else
+                {
+                    cout << "You need an account! Use option |1| to create a new account or option |2| to select one!" << endl << endl;
+                    continue;
+                }
+                
+            }
+
+            case 4:
+            {
+
+            }
+
+            case 5:
+            {
+
+            }
+
+            case 6:
+            {
+
+            }
+        }
+    }
     
-    selectedChampion.print();
+
+    
+
+    
+    
     
     return 0;
 }
