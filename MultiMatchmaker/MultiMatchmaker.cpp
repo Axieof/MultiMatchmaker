@@ -194,8 +194,6 @@ void SPS(Dictionary& players, Player& currentPlayer)
 
 }
 
-
-
 int main()
 {
     //Initializations
