@@ -79,8 +79,10 @@ int List::getLength() {
 void List::print() {
 	Node* temp = firstNode;
 	while (temp != NULL) {
-		temp->pc.player.print();
-		temp->pc.champion.print();
+		/*temp->pc.player.print();
+		temp->pc.champion.print();*/
+		cout << temp->pc.player.getUsername() << endl;
+		cout << temp->pc.champion.getType() << endl;
 		cout << endl;
 		temp = temp->next;
 	}
@@ -112,11 +114,14 @@ int List::getPlayerQueueIndex(Player player) {
 }
 
 int List::searchNext(Champion champion) {
-	Champion firstChampion = firstNode->pc.champion;
-	Node* current = firstNode->next;
-	int queueIndex = 2;
+	Node* current = firstNode;
+	int queueIndex = 1;
+	int found = 0;
 	while (current != NULL) {
 		if (current->pc.champion.getType() == champion.getType()) {
+			found++;
+		}
+		if (found == 2) {
 			return queueIndex;
 		}
 		current = current->next;

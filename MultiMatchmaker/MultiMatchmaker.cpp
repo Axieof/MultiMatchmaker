@@ -166,6 +166,49 @@ Player SelectAccount(Dictionary &players)
     return selectedPlayer;
 }
 
+void matchPlayers(List& playerQueue, vector<PlayerChampion>& team1, vector<PlayerChampion>& team2) {
+    playerQueue.print(); //temp
+
+    cout << BOLDMAGENTA << "Attempting to match teams..." << RESET << endl;
+
+    int currentIndex = 0;
+
+    while (true) {
+        if (team1.size() == 2) {
+            cout << BOLDYELLOW << "TEAM 1" << RESET << endl;
+            cout << BOLDCYAN << "Player 1: " << team1[0].player.getUsername() << "\tChampion: " << team1[0].champion.getType() << RESET << endl;
+            cout << BOLDCYAN << "Player 2: " << team1[1].player.getUsername() << "\tChampion: " << team1[1].champion.getType() << RESET << endl << endl;
+            cout << BOLDYELLOW << "TEAM 2" << RESET << endl;
+            cout << BOLDCYAN << "Player 1: " << team2[0].player.getUsername() << "\tChampion: " << team2[0].champion.getType() << RESET << endl;
+            cout << BOLDCYAN << "Player 2: " << team2[1].player.getUsername() << "\tChampion: " << team2[1].champion.getType() << RESET << endl << endl;
+
+            team1.clear();
+            team2.clear();
+            break;
+        }
+
+        PlayerChampion first = playerQueue.get(currentIndex);
+        int nextPlayerIndex = playerQueue.searchNext(first.champion);
+
+        // match found
+        if (nextPlayerIndex != -1) {
+            team1.push_back(playerQueue.get(currentIndex));
+            team2.push_back(playerQueue.get(nextPlayerIndex - 1));
+            playerQueue.remove(currentIndex);
+            playerQueue.remove(nextPlayerIndex - 2);
+            currentIndex = 0;
+        }
+        // no match found
+        else {
+            currentIndex++;
+            if (currentIndex > playerQueue.getLength()) {
+                cout << RED << "Matchmaking failed" << RESET << endl;
+                break;
+            }
+        }
+    }
+}
+
 
 
 int main()
@@ -191,21 +234,7 @@ int main()
         if (option == 0)
         {
             //Exit Game
-            //continueLoop = false;
-            Player p1 = Player("a", 0, 0, 0, 0, 0);
-            Player p2 = Player("b", 0, 0, 0, 0, 0);
-            Player p3 = Player("c", 0, 0, 0, 0, 0);
-            Player p4 = Player("d", 0, 0, 0, 0, 0);
-            Player p5 = Player("e", 0, 0, 0, 0, 0);
-            playerQueue.add(PlayerChampion(p1, championList[0]));
-            playerQueue.add(PlayerChampion(p2, championList[1]));
-            playerQueue.add(PlayerChampion(p3, championList[2]));
-            playerQueue.add(PlayerChampion(p4, championList[0]));
-            playerQueue.add(PlayerChampion(p5, championList[2]));
-            
-            cout << "--------------------------------------" << endl;
-            playerQueue.get(0).champion.print();
-            cout << "NEXT: " << playerQueue.searchNext(playerQueue.get(0).champion) << endl;;
+            continueLoop = false;
         }
         else if (option == 1)
         {
@@ -250,8 +279,8 @@ int main()
                     playerQueue.add(PlayerChampion(currentPlayer, selectedChampion));
                     cout << BOLDGREEN << currentPlayer.getUsername() << " has joined the queue with " << selectedChampion.getType() << RESET << endl;
 
-                    cout << "---------------------------------------------------" << endl;
-                    
+                    cout << "-------------------------------------------------" << endl;
+                    matchPlayers(playerQueue, team1, team2);
                 }
             }
             else {
@@ -263,6 +292,9 @@ int main()
             // Queue status
 
             cout << BOLDBLUE << "Number of players in queue: " << playerQueue.getLength() << RESET << endl;
+
+            playerQueue.print();
+
             if (accountSelected) {
                 if (playerQueue.playerInQueue(currentPlayer)) {
                     int queueIndex = playerQueue.getPlayerQueueIndex(currentPlayer);
@@ -318,7 +350,19 @@ int main()
                 cout << RED << "No account selected! Use option |1| to create a new account or option |2| to select one!" << RESET << endl << endl;
             }
         }
-
+        else if (option == 8)
+        {
+            Player p1 = Player("a", 0, 0, 0, 0, 0);
+            Player p2 = Player("b", 0, 0, 0, 0, 0);
+            Player p3 = Player("c", 0, 0, 0, 0, 0);
+            Player p4 = Player("d", 0, 0, 0, 0, 0);
+            Player p5 = Player("e", 0, 0, 0, 0, 0);
+            playerQueue.add(PlayerChampion(p1, championList[0]));
+            playerQueue.add(PlayerChampion(p2, championList[1]));
+            playerQueue.add(PlayerChampion(p3, championList[2]));
+            playerQueue.add(PlayerChampion(p4, championList[3]));
+            playerQueue.add(PlayerChampion(p5, championList[4]));
+        }
     }
     return 0;
 }
