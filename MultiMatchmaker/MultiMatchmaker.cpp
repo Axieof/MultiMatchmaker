@@ -161,6 +161,35 @@ Player SelectAccount(Dictionary &players)
     return selectedPlayer;
 }
 
+Player OpponentSelector(Dictionary &players, Player &currentPlayer)
+{
+    Dictionary temp = players;
+    temp.remove(currentPlayer.getUsername());
+    Player opponent = temp.getOpponent(currentPlayer);
+    temp.~Dictionary();
+    return opponent;
+}
+
+void SPS(Dictionary& players, Player& currentPlayer)
+{
+    int option;
+    cout << BOLDYELLOW << "------------ Lets play Scissors, Paper, Stone! ------------" << WHITE << endl << endl;
+    Player opponent = OpponentSelector(players, currentPlayer);
+
+    cout << "Your opponent is " << opponent.getUsername() << "!" << endl << endl;
+
+    cout << "These are your options!" << endl;
+    cout << "1) Scissors" << endl;
+    cout << "2) Paper" << endl;
+    cout << "3) Stone" << endl;
+    cout << "\nSelect an option!: ";
+    cin >> option;
+
+    int opponentChoice = 1 + (rand() % 3);
+    cout << opponentChoice;
+
+}
+
 
 int main()
 {
