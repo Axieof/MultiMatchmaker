@@ -204,7 +204,7 @@ void SPS(Dictionary& players, Player& currentPlayer)
 
 }
 
-void UpdatePlayer(Player &currentPlayer)
+void UpdatePlayer(Player& currentPlayer)
 {
     int matcheswon = currentPlayer.getMatchWon();
     int matchCount = currentPlayer.getmatchCount();
@@ -219,6 +219,8 @@ void UpdatePlayer(Player &currentPlayer)
 
         currentPlayer.setWinRate(newWinRate);
     }
+}
+
 void matchPlayers(List& playerQueue, vector<PlayerChampion>& team1, vector<PlayerChampion>& team2) {
     playerQueue.print(); //temp
 
