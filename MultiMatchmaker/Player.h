@@ -10,12 +10,12 @@ class Player
 		int matchcount;
 		int matchwon;
 		int matchloss;
-		int winrate;
+		float winrate;
 		int skilllevel;
 
 		Player();
 
-		Player(string _username, int _matchcount, int _matchwon, int _matchloss, int _winrate, int _skilllevel);
+		Player(string _username, int _matchcount, int _matchwon, int _matchloss, float _winrate, int _skilllevel);
 
 		~Player();
 
@@ -27,9 +27,11 @@ class Player
 
 		int getMatchLoss();
 
-		int getwinRate();
+		float getwinRate();
 
 		int getskillLevel();
+
+		void setWinRate(float _winRate);
 
 		void print();
 };
