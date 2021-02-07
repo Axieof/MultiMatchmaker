@@ -204,14 +204,23 @@ void SPS(Dictionary& players, Player& currentPlayer)
 
 }
 
-void UpdatePlayer(Player& currentPlayer)
+void UpdatePlayer(Player &currentPlayer)
 {
     int matcheswon = currentPlayer.getMatchWon();
     int matchCount = currentPlayer.getmatchCount();
 
-    int newWinRate = matcheswon / matchCount;
+    if (matchCount == 0)
+    {
+        return;
+    }
+    else
+    {
+        int newWinRate = matcheswon / matchCount;
 
-    currentPlayer.setWinRate(newWinRate);
+        currentPlayer.setWinRate(newWinRate);
+    }
+
+    
 }
 
 int main()
@@ -272,6 +281,7 @@ int main()
             if (accountSelected)
             {
                 cout << BOLDYELLOW << "---------------- Player stats ----------------" << WHITE << endl << endl;
+                UpdatePlayer(currentPlayer);
                 currentPlayer.print();
                 cout << "" << endl;
             }
