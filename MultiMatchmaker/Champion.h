@@ -10,6 +10,7 @@ private:
 	int Heal;
 	int Mobility;
 	int Range;
+	int Id;
 
 public:
 	Champion();
@@ -21,6 +22,7 @@ public:
 	int getHeal();
 	int getMobility();
 	int getRange();
+	int getId();
 
 	void print();
 };

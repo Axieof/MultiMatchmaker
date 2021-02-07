@@ -6,30 +6,34 @@
 #include "PlayerChampion.h"
 using namespace std;
 
-class List
+class Web
 {
 private:
 	struct Node
 	{
 		PlayerChampion pc;
 		Node* next;
+		Node* nextChampPlayer;
 	};
 
 	Node* firstNode;
 	int size;
+	Node* lastPlayerChampionIndex[7];
+
 
 public:
-	List();
 
-	~List();
+	Web();
 
-	bool add(PlayerChampion);
+	~Web();
+
+	bool add(PlayerChampion &playerChampion);
 
 	void remove(int);
 
-	PlayerChampion get(int);
-
 	bool isEmpty();
+
+	string returnLastArray(int index);
 
 	int getLength();
 
@@ -40,5 +44,6 @@ public:
 	int getPlayerQueueIndex(Player);
 
 	int searchNext(Champion);
+
 };
 

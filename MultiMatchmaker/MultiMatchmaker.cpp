@@ -16,6 +16,7 @@
 #include "Player.h"
 #include "PlayerChampion.h"
 #include "Colours.h"
+#include "Web.h"
 using namespace std;
 
 void readPlayersFromFile(string file_name, Dictionary &players)
@@ -417,6 +418,24 @@ int main()
             playerQueue.add(PlayerChampion(p3, championList[2]));
             playerQueue.add(PlayerChampion(p4, championList[3]));
             playerQueue.add(PlayerChampion(p5, championList[4]));
+        }
+        else if (option == 9)
+        {
+            Web web;
+
+            Player p1 = Player("a", 0, 0, 0, 0, 0);
+            PlayerChampion pc = PlayerChampion(p1, championList[0]);
+            Player p2 = Player("b", 0, 0, 0, 0, 0);
+            PlayerChampion pc2 = PlayerChampion(p2, championList[0]);
+            Player p3 = Player("c", 0, 0, 0, 0, 0);
+            PlayerChampion pc3 = PlayerChampion(p3, championList[0]);
+
+            web.add(pc);
+            web.add(pc2);
+            web.add(pc3);
+
+            cout << web.returnLastArray(0);
+
         }
     }
     return 0;
