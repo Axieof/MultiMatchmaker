@@ -64,6 +64,8 @@ public:
 	// return the number of items in the Dictionary
 	int getLength();
 
+	Player getOpponent(Player &currentPlayer);
+
 	//------------------- Other useful functions -----------------
 
 	// display the items in the Dictionary

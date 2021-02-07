@@ -40,7 +40,7 @@ void readPlayersFromFile(string file_name, Dictionary &players)
             int MatchCount = stol(matchCount);
             int MatchesWon = stol(matchesWon);
             int MatchesLoss = stol(matchesLoss);
-            int WinRate = stol(winRate);
+            float WinRate = stof(winRate);
             int SkillLevel = stol(skillLevel);
 
             //cout << "Name: " << name << endl;
@@ -145,8 +145,17 @@ Player CreateAccount(Dictionary &players)
     cin >> username;
 
     Player newPlayer = Player(username, 0, 0, 0, 0, 0);
-    players.add(username, newPlayer);
-    cout << BOLDGREEN << "\nNew account created successfully!" << RESET << endl << endl;
+    bool success = players.add(username, newPlayer);
+
+    if (success)
+    {
+        cout << BOLDGREEN << "\nNew account created successfully!" << RESET << endl << endl;
+    }
+    else
+    {
+        cout << RED << "\nNew account created unsuccessfully!" << RESET << endl << endl;
+    }
+    
     return newPlayer;
 }
 
@@ -166,6 +175,50 @@ Player SelectAccount(Dictionary &players)
     return selectedPlayer;
 }
 
+Player OpponentSelector(Dictionary &players, Player &currentPlayer)
+{
+    Dictionary temp = players;
+    temp.remove(currentPlayer.getUsername());
+    Player opponent = temp.getOpponent(currentPlayer);
+    temp.~Dictionary();
+    return opponent;
+}
+
+void SPS(Dictionary& players, Player& currentPlayer)
+{
+    int option;
+    cout << BOLDYELLOW << "------------ Lets play Scissors, Paper, Stone! ------------" << WHITE << endl << endl;
+    Player opponent = OpponentSelector(players, currentPlayer);
+
+    cout << "Your opponent is " << opponent.getUsername() << "!" << endl << endl;
+
+    cout << "These are your options!" << endl;
+    cout << "1) Scissors" << endl;
+    cout << "2) Paper" << endl;
+    cout << "3) Stone" << endl;
+    cout << "\nSelect an option!: ";
+    cin >> option;
+
+    int opponentChoice = 1 + (rand() % 3);
+    cout << opponentChoice;
+
+}
+
+void UpdatePlayer(Player &currentPlayer)
+{
+    int matcheswon = currentPlayer.getMatchWon();
+    int matchCount = currentPlayer.getmatchCount();
+
+    if (matchCount == 0)
+    {
+        return;
+    }
+    else
+    {
+        int newWinRate = matcheswon / matchCount;
+
+        currentPlayer.setWinRate(newWinRate);
+    }
 void matchPlayers(List& playerQueue, vector<PlayerChampion>& team1, vector<PlayerChampion>& team2) {
     playerQueue.print(); //temp
 
@@ -208,7 +261,6 @@ void matchPlayers(List& playerQueue, vector<PlayerChampion>& team1, vector<Playe
         }
     }
 }
-
 
 
 int main()
@@ -255,6 +307,7 @@ int main()
             if (accountSelected)
             {
                 cout << BOLDYELLOW << "---------------- Player stats ----------------" << WHITE << endl << endl;
+                UpdatePlayer(currentPlayer);
                 currentPlayer.print();
                 cout << "" << endl;
             }

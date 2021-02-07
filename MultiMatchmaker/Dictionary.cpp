@@ -189,3 +189,18 @@ void Dictionary::printPlayers()
 		}
 	}
 }
+
+Player Dictionary::getOpponent(Player& currentPlayer)
+{
+	int currentSkillLevel = currentPlayer.getskillLevel();
+	for (int i = 0; i < MAX_SIZE; i++) {
+		if (items[i] != NULL)
+		{
+			Node* temp = items[i];
+			if (temp->item.getskillLevel() == currentSkillLevel)
+			{
+				return temp->item;
+			}
+		}
+	}
+}
