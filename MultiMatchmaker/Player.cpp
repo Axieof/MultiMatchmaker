@@ -3,7 +3,6 @@ using namespace std;
 
 Player::Player()
 {
-
 }
 
 Player::Player(string _username, int _matchcount, int _matchwon, int _matchloss, int _winrate, int _skilllevel)
@@ -33,7 +32,7 @@ int Player::getmatchCount()
 
 int Player::getMatchWon()
 {
-	return matchloss;
+	return matchwon;
 }
 
 int Player::getMatchLoss()
