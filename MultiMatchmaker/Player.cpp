@@ -55,7 +55,7 @@ void Player::print() {
 	cout << "Match Count: " << matchcount << endl;
 	cout << "Match Won: " << matchwon << endl;
 	cout << "Match Loss: " << matchloss << endl;
-	cout << "Win Rate: " << winrate << endl;
+	cout << "Win Rate: " << winrate << "%" << endl;
 	cout << "Skill Level: " << skilllevel << endl;
 }
 

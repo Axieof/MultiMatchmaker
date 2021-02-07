@@ -44,13 +44,6 @@ void readPlayersFromFile(string file_name, Dictionary &players)
             float WinRate = stof(winRate);
             int SkillLevel = stol(skillLevel);
 
-            //cout << "Name: " << name << endl;
-            //cout << "MatchCount: " << MatchCount << endl;
-            //cout << "MatchesWon: " << MatchesWon << endl;
-            //cout << "MatchesLoss: " << MatchesLoss << endl;
-            //cout << "WinRate: " << WinRate << endl;
-            //cout << "SkillLevel: " << SkillLevel << endl;
-
             Player temp = Player(name, MatchCount, MatchesWon, MatchesLoss, WinRate, SkillLevel);
             players.add(name, temp);
         }
@@ -105,7 +98,7 @@ Champion getChampionSelection(vector<Champion> championList) {
         cout << left << setw(6) << championList[i].getRange() << endl;
     }
 
-    cout << "Select champion [1-7]: ";
+    cout << "\nSelect champion [1-7]: ";
     int index;
     cin >> index;
     while (!(index >= 1 && index <= 7)) {
@@ -122,14 +115,26 @@ int MainMenu(string username = "Player")
 {
     int option;
     cout << BOLDYELLOW << "----------------- Welcome " << username << "! -----------------" << WHITE << endl << endl;
+    cout << BOLDGREEN << "Common Functions" << RESET << endl;
+    cout << "0) Leave Game" << endl;
     cout << "1) Create an Account" << endl;
     cout << "2) Select an Account" << endl;
-    cout << "3) Get Player Stats" << endl;
+    cout << "3) Get Player Stats" << endl << endl;
+
+    cout << BOLDGREEN << "List Functions" << RESET << endl;
+
     cout << "4) Join Queue" << endl;
     cout << "5) Queue Status" << endl;
     cout << "6) Change Champion" << endl;
     cout << "7) Leave Queue" << endl;
-    cout << "0) Leave Game" << endl << endl;
+    cout << "8) Initialise List Data" << endl << endl;
+
+    cout << BOLDGREEN "Web Functions" << RESET << endl;
+
+    cout << "9) Join Queue (Web)" << endl;
+    cout << "10) Queue Status (Web)" << endl;
+    cout << "11) Print Chain" << endl;
+    cout << "12) Initialise Web Data" << endl << endl;
 
     cout << "Enter an option: ";
     cin >> option;
@@ -176,35 +181,6 @@ Player SelectAccount(Dictionary &players)
     return selectedPlayer;
 }
 
-Player OpponentSelector(Dictionary &players, Player &currentPlayer)
-{
-    Dictionary temp = players;
-    temp.remove(currentPlayer.getUsername());
-    Player opponent = temp.getOpponent(currentPlayer);
-    temp.~Dictionary();
-    return opponent;
-}
-
-void SPS(Dictionary& players, Player& currentPlayer)
-{
-    int option;
-    cout << BOLDYELLOW << "------------ Lets play Scissors, Paper, Stone! ------------" << WHITE << endl << endl;
-    Player opponent = OpponentSelector(players, currentPlayer);
-
-    cout << "Your opponent is " << opponent.getUsername() << "!" << endl << endl;
-
-    cout << "These are your options!" << endl;
-    cout << "1) Scissors" << endl;
-    cout << "2) Paper" << endl;
-    cout << "3) Stone" << endl;
-    cout << "\nSelect an option!: ";
-    cin >> option;
-
-    int opponentChoice = 1 + (rand() % 3);
-    cout << opponentChoice;
-
-}
-
 void UpdatePlayer(Player& currentPlayer)
 {
     int matcheswon = currentPlayer.getMatchWon();
@@ -217,6 +193,8 @@ void UpdatePlayer(Player& currentPlayer)
     else
     {
         int newWinRate = matcheswon / matchCount;
+
+        newWinRate *= 100;
 
         currentPlayer.setWinRate(newWinRate);
     }
@@ -258,6 +236,49 @@ void matchPlayers(List& playerQueue, vector<PlayerChampion>& team1, vector<Playe
         else {
             currentIndex++;
             if (currentIndex > playerQueue.getLength()) {
+                cout << RED << "Matchmaking failed" << RESET << endl << endl;
+                break;
+            }
+        }
+    }
+}
+
+void webMatchPlayers(Web& web, vector<PlayerChampion>& team1, vector<PlayerChampion>& team2) {
+    web.print(); //temp
+
+    cout << BOLDMAGENTA << "Attempting to match teams..." << RESET << endl;
+
+    int currentIndex = 0;
+
+    while (true) {
+        if (team1.size() == 2) {
+            cout << BOLDYELLOW << "TEAM 1" << RESET << endl;
+            cout << BOLDCYAN << "Player 1: " << team1[0].player.getUsername() << "\tChampion: " << team1[0].champion.getType() << RESET << endl;
+            cout << BOLDCYAN << "Player 2: " << team1[1].player.getUsername() << "\tChampion: " << team1[1].champion.getType() << RESET << endl << endl;
+            cout << BOLDYELLOW << "TEAM 2" << RESET << endl;
+            cout << BOLDCYAN << "Player 1: " << team2[0].player.getUsername() << "\tChampion: " << team2[0].champion.getType() << RESET << endl;
+            cout << BOLDCYAN << "Player 2: " << team2[1].player.getUsername() << "\tChampion: " << team2[1].champion.getType() << RESET << endl << endl;
+
+            team1.clear();
+            team2.clear();
+            break;
+        }
+
+        PlayerChampion first = web.get(currentIndex);
+        int nextPlayerIndex = web.getPlayerQueueIndex(web.searchNext(first.champion));
+
+        // match found
+        if (nextPlayerIndex != -1) {
+            team1.push_back(web.get(currentIndex));
+            team2.push_back(web.get(nextPlayerIndex - 1));
+            web.remove(currentIndex);
+            web.remove(nextPlayerIndex - 2);
+            currentIndex = 0;
+        }
+        // no match found
+        else {
+            currentIndex++;
+            if (currentIndex >= web.getLength()) {
                 cout << RED << "Matchmaking failed" << RESET << endl;
                 break;
             }
@@ -265,13 +286,13 @@ void matchPlayers(List& playerQueue, vector<PlayerChampion>& team1, vector<Playe
     }
 }
 
-
 int main()
 {
     //Initializations
     Dictionary players;
     Player currentPlayer;
     List playerQueue;
+    Web webPlayerQueue;
     bool continueLoop = true;
     bool accountSelected = false;
     vector<PlayerChampion> team1;
@@ -333,9 +354,9 @@ int main()
                 else {
                     Champion selectedChampion = getChampionSelection(championList);
                     playerQueue.add(PlayerChampion(currentPlayer, selectedChampion));
-                    cout << BOLDGREEN << currentPlayer.getUsername() << " has joined the queue with " << selectedChampion.getType() << RESET << endl;
+                    cout << BOLDCYAN << currentPlayer.getUsername() << " has joined the queue with " << selectedChampion.getType() << RESET << endl << endl;
 
-                    cout << "-------------------------------------------------" << endl;
+                    cout << BOLDBLUE <<  "--------------- Player Queue ---------------" << endl << endl;
                     matchPlayers(playerQueue, team1, team2);
                 }
             }
@@ -357,7 +378,7 @@ int main()
                     cout << BOLDBLUE << currentPlayer.getUsername() << " is at position " << queueIndex << " in player queue " << RESET << endl << endl;
                 }
                 else {
-                    cout << RED << "Current player is not in queue!" << RESET << endl;
+                    cout << RED << "Current player is not in queue!" << RESET << endl << endl;
                 }
             }
         }
@@ -399,7 +420,7 @@ int main()
                     }
                 }
                 else {
-                    cout << RED << "Current player is not in queue!" << RESET << endl;
+                    cout << RED << "Current player is not in queue!" << RESET << endl << endl;
                 }
             }
             else {
@@ -421,22 +442,83 @@ int main()
         }
         else if (option == 9)
         {
-            Web web;
+            // Join Queue
 
+            if (accountSelected)
+            {
+                // Selected player is in player queue
+                if (webPlayerQueue.playerInQueue(currentPlayer)) {
+                    cout << RED << "Player is already in queue!" << RESET << endl;
+                }
+                // Selected player is not in player queue (Run champion selection function)
+                else {
+                    Champion selectedChampion = getChampionSelection(championList);
+                    PlayerChampion newPC = PlayerChampion(currentPlayer, selectedChampion);
+                    webPlayerQueue.add(newPC);
+                    cout << BOLDGREEN << currentPlayer.getUsername() << " has joined the queue with " << selectedChampion.getType() << RESET << endl;
+
+                    cout << "-------------------------------------------------" << endl;
+                    webMatchPlayers(webPlayerQueue, team1, team2);
+                }
+            }
+            else {
+                cout << RED << "No account selected! Use option |1| to create a new account or option |2| to select one!" << RESET << endl << endl;
+            }
+        }
+        else if (option == 10)
+        {
+            // Queue status for web
+
+            cout << BOLDBLUE << "Number of players in web queue: " << webPlayerQueue.getLength() << RESET << endl;
+
+            webPlayerQueue.print();
+
+            if (accountSelected) {
+                if (webPlayerQueue.playerInQueue(currentPlayer)) {
+                    int queueIndex = webPlayerQueue.getPlayerQueueIndex(currentPlayer);
+                    cout << BOLDBLUE << currentPlayer.getUsername() << " is at position " << queueIndex << " in player queue " << RESET << endl << endl;
+                }
+                else {
+                    cout << RED << "Current player is not in queue!" << RESET << endl << endl;
+                }
+            }
+		}
+        else if (option == 11)
+        {
+            Champion champion = getChampionSelection(championList);
+            webPlayerQueue.printChain(champion);
+        }
+        else if (option == 12)
+        {
             Player p1 = Player("a", 0, 0, 0, 0, 0);
             PlayerChampion pc = PlayerChampion(p1, championList[0]);
             Player p2 = Player("b", 0, 0, 0, 0, 0);
-            PlayerChampion pc2 = PlayerChampion(p2, championList[0]);
+            PlayerChampion pc2 = PlayerChampion(p2, championList[1]);
             Player p3 = Player("c", 0, 0, 0, 0, 0);
-            PlayerChampion pc3 = PlayerChampion(p3, championList[0]);
+            PlayerChampion pc3 = PlayerChampion(p3, championList[1]);
+            Player p4 = Player("d", 0, 0, 0, 0, 0);
+            PlayerChampion pc4 = PlayerChampion(p4, championList[0]);
+            Player p5 = Player("e", 0, 0, 0, 0, 0);
+            PlayerChampion pc5 = PlayerChampion(p5, championList[2]);
+            Player p6 = Player("f", 0, 0, 0, 0, 0);
+            PlayerChampion pc6 = PlayerChampion(p6, championList[0]);
+            /*Player p7 = Player("g", 0, 0, 0, 0, 0);
+            PlayerChampion pc7 = PlayerChampion(p7, championList[1]);
+            Player p8 = Player("h", 0, 0, 0, 0, 0);
+            PlayerChampion pc8 = PlayerChampion(p8, championList[2]);*/
 
-            web.add(pc);
-            web.add(pc2);
-            web.add(pc3);
+            webPlayerQueue.add(pc);
+            webPlayerQueue.add(pc2);
+            webPlayerQueue.add(pc3);
+            webPlayerQueue.add(pc4);
+            webPlayerQueue.add(pc5);
+            webPlayerQueue.add(pc6);
 
-            cout << web.returnLastArray(0);
+            /*web.add(pc7);
+            web.add(pc8);*/
 
-        }
+            webPlayerQueue.print();
+		}
     }
     return 0;
 }

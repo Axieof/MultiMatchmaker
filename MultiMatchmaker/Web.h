@@ -31,6 +31,8 @@ public:
 
 	void remove(int);
 
+	PlayerChampion get(int);
+
 	bool isEmpty();
 
 	string returnLastArray(int index);
@@ -39,11 +41,13 @@ public:
 
 	void print();
 
+	void printChain(Champion champion);
+
 	bool playerInQueue(Player);
 
 	int getPlayerQueueIndex(Player);
 
-	int searchNext(Champion);
+	Player searchNext(Champion);
 
 };
 
