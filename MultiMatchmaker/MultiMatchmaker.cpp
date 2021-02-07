@@ -200,6 +200,46 @@ void UpdatePlayer(Player& currentPlayer)
     }
 }
 
+void Update(int _matchcount, int _matchwon, int _matchloss, Player &player)
+{
+    player.setMatchCount(_matchcount);
+    player.setMatchWon(_matchwon);
+    player.setMatchLoss(_matchloss);
+}
+
+void RandomMatchResult(Player &p1, Player &p2, Player &p3, Player &p4)
+{
+    int team1result = rand() % 2;
+    int team2result = 1;
+
+    if (team1result == 1)
+    {
+        team2result = 0;
+        cout << "\nTeam 1 won!" << endl;
+        cout << "Team 2 loss!" << endl;
+
+        Update(p1.getmatchCount() + 1, p1.getMatchWon() + 1, p1.getMatchLoss(), p1);
+        Update(p2.getmatchCount() + 1, p2.getMatchWon() + 1, p2.getMatchLoss(), p2);
+        Update(p3.getmatchCount() + 1, p3.getMatchWon(), p3.getMatchLoss() + 1, p3);
+        Update(p4.getmatchCount() + 1, p4.getMatchWon(), p4.getMatchLoss() + 1, p4);
+    }
+    else
+    {
+        cout << "\nTeam 2 won!" << endl;
+        cout << "Team 1 loss!" << endl;
+
+        Update(p1.getmatchCount() + 1, p1.getMatchWon(), p1.getMatchLoss() + 1, p1);
+        Update(p2.getmatchCount() + 1, p2.getMatchWon(), p2.getMatchLoss() + 1, p2);
+        Update(p3.getmatchCount() + 1, p3.getMatchWon() + 1, p3.getMatchLoss(), p3);
+        Update(p4.getmatchCount() + 1, p4.getMatchWon() + 1, p4.getMatchLoss(), p4);
+    }
+
+    UpdatePlayer(p1);
+    UpdatePlayer(p2);
+    UpdatePlayer(p3);
+    UpdatePlayer(p4);
+}
+
 void matchPlayers(List& playerQueue, vector<PlayerChampion>& team1, vector<PlayerChampion>& team2) {
     playerQueue.print(); //temp
 
@@ -215,6 +255,13 @@ void matchPlayers(List& playerQueue, vector<PlayerChampion>& team1, vector<Playe
             cout << BOLDYELLOW << "TEAM 2" << RESET << endl;
             cout << BOLDCYAN << "Player 1: " << team2[0].player.getUsername() << "\tChampion: " << team2[0].champion.getType() << RESET << endl;
             cout << BOLDCYAN << "Player 2: " << team2[1].player.getUsername() << "\tChampion: " << team2[1].champion.getType() << RESET << endl << endl;
+
+            /*Player p1 = team1[0].getPlayer();
+            Player p2 = team1[1].getPlayer();
+            Player p3 = team2[0].getPlayer();
+            Player p4 = team2[2].getPlayer();
+
+            RandomMatchResult(p1, p2, p3, p4);*/
 
             team1.clear();
             team2.clear();
@@ -258,6 +305,13 @@ void webMatchPlayers(Web& web, vector<PlayerChampion>& team1, vector<PlayerChamp
             cout << BOLDYELLOW << "TEAM 2" << RESET << endl;
             cout << BOLDCYAN << "Player 1: " << team2[0].player.getUsername() << "\tChampion: " << team2[0].champion.getType() << RESET << endl;
             cout << BOLDCYAN << "Player 2: " << team2[1].player.getUsername() << "\tChampion: " << team2[1].champion.getType() << RESET << endl << endl;
+
+            /*Player p1 = team1[0].getPlayer();
+            Player p2 = team1[1].getPlayer();
+            Player p3 = team2[0].getPlayer();
+            Player p4 = team2[1].getPlayer();
+
+            RandomMatchResult(p1, p2, p3, p4);*/
 
             team1.clear();
             team2.clear();
@@ -331,7 +385,6 @@ int main()
             if (accountSelected)
             {
                 cout << BOLDYELLOW << "---------------- Player stats ----------------" << WHITE << endl << endl;
-                UpdatePlayer(currentPlayer);
                 currentPlayer.print();
                 cout << "" << endl;
             }

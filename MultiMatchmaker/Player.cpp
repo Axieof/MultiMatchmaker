@@ -63,3 +63,18 @@ void Player::setWinRate(float _winRate)
 {
 	winrate = _winRate;
 }
+
+void Player::setMatchCount(int _mathcount)
+{
+	matchcount = _mathcount;
+}
+
+void Player::setMatchWon(int _matchwon)
+{
+	matchwon = _matchwon;
+}
+
+void Player::setMatchLoss(int _matchloss)
+{
+	matchloss = _matchloss;
+}

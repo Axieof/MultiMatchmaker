@@ -33,6 +33,12 @@ class Player
 
 		void setWinRate(float _winRate);
 
+		void setMatchCount(int _mathcount);
+
+		void setMatchWon(int _matchwon);
+
+		void setMatchLoss(int _matchloss);
+
 		void print();
 };
 

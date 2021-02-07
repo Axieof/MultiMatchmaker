@@ -10,5 +10,7 @@ class PlayerChampion
 
 		PlayerChampion();
 		PlayerChampion(Player p, Champion c);
+
+		Player getPlayer();
 };
 

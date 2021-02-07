@@ -8,3 +8,8 @@ PlayerChampion::PlayerChampion(Player p, Champion c) {
 	champion = c;
 }
 
+Player PlayerChampion::getPlayer()
+{
+	return player;
+}
+
