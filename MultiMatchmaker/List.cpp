@@ -80,13 +80,36 @@ int List::getLength() {
 }
 
 void List::print() {
-	Node* temp = new Node;
-	temp = firstNode;
+	Node* temp = firstNode;
 	while (temp != NULL) {
 		temp->pc.player.print();
 		temp->pc.champion.print();
-		cout << "-----------------------------" << endl;
+		cout << endl;
 		temp = temp->next;
 	}
 	cout << endl << endl;
+}
+
+bool List::playerInQueue(Player player) {
+	Node* temp = firstNode;
+	while (temp != NULL) {
+		if (temp->pc.player.getUsername() == player.getUsername()) {
+			return true;
+		}
+		temp = temp->next;
+	}
+	return false;
+}
+
+int List::getPlayerQueueIndex(Player player) {
+	Node* temp = firstNode;
+	int queueIndex = 1;
+	while (temp != NULL) {
+		if (temp->pc.player.getUsername() == player.getUsername()) {
+			return queueIndex;
+		}
+		temp = temp->next;
+		queueIndex++;
+	}
+	return -1;
 }

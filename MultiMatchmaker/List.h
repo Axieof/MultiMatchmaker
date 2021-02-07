@@ -25,15 +25,19 @@ public:
 
 	bool add(PlayerChampion);
 
-	void remove(int index);
+	void remove(int);
 
-	PlayerChampion get(int index);
+	PlayerChampion get(int);
 
 	bool isEmpty();
 
 	int getLength();
 
 	void print();
+
+	bool playerInQueue(Player);
+
+	int getPlayerQueueIndex(Player);
 
 	//PlayerChampion searchNext(Champion champion);
 };

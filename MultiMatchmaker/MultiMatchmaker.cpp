@@ -10,9 +10,11 @@
 #include <vector> // store the string
 #include <sstream>// stringstream
 #include <stdio.h>
+#include "List.h"
 #include "Dictionary.h"
 #include "Champion.h"
 #include "Player.h"
+#include "PlayerChampion.h"
 #include "Colours.h"
 using namespace std;
 
@@ -55,6 +57,7 @@ void readPlayersFromFile(string file_name, Dictionary &players)
     file.close();
 }
 
+// Read champion data from csv, create Champion objects and add to vector
 vector<Champion> initChampions(string file_name)
 {
     vector<Champion> champions;
@@ -84,7 +87,8 @@ vector<Champion> initChampions(string file_name)
     return champions;
 }
 
-void getChampionSelection(vector<Champion> championList, Champion& selectedChampion) {
+// Display champion stats in tabular format, then prompt user to select champion
+Champion getChampionSelection(vector<Champion> championList) {
     cout << BOLDYELLOW << "---------------- Select a Champion ----------------" << WHITE << endl;
     cout << right << setw(2) << "#" << " |" << left << setw(10) << "Type" << "|" << left << setw(7) << "Attack" << "|" << left << setw(5) << "Hp" << "|" << left << setw(5) << "Heal" << "|" << left << setw(9) << "Mobility" << "|" << left << setw(6) << "Range" << endl;
     cout << "---|----------|-------|-----|-----|---------|------" << endl;
@@ -100,7 +104,6 @@ void getChampionSelection(vector<Champion> championList, Champion& selectedChamp
         cout << left << setw(6) << championList[i].getRange() << endl;
     }
 
-
     cout << "Select champion [1-7]: ";
     int index;
     cin >> index;
@@ -109,21 +112,21 @@ void getChampionSelection(vector<Champion> championList, Champion& selectedChamp
         cout << "Select champion [1-7]: ";
         cin >> index;
     }
-    selectedChampion = championList[index - 1];
+    Champion selectedChampion = championList[index - 1];
     cout << BOLDGREEN << "\nYou have selected: " << selectedChampion.getType() << RESET << endl << endl;
+    return selectedChampion;
 }
 
-int MainMenu()
+int MainMenu(string username = "Player")
 {
     int option;
-    cout << BOLDYELLOW << "----------------- Welcome Player! -----------------" << WHITE << endl << endl;
+    cout << BOLDYELLOW << "----------------- Welcome " << username << "! -----------------" << WHITE << endl << endl;
     cout << "1) Create an Account" << endl;
     cout << "2) Select an Account" << endl;
-    cout << "3) Select a Champion" << endl;
-    cout << "4) See Player Stats" << endl;
-    cout << "5) Join a Queue" << endl;
-    cout << "6) Queue Status" << endl;
-    cout << "7) Leave Queue" << endl;
+    cout << "3) Get Player Stats" << endl;
+    cout << "4) Join Queue" << endl;
+    cout << "5) Queue Status" << endl;
+    cout << "6) Leave Queue" << endl;
     cout << "0) Leave Game" << endl << endl;
 
     cout << "Enter an option: ";
@@ -142,7 +145,7 @@ Player CreateAccount(Dictionary &players)
 
     Player newPlayer = Player(username, 0, 0, 0, 0, 0);
     players.add(username, newPlayer);
-    cout << "\nNew Account Created Successfully!" << endl << endl;
+    cout << BOLDGREEN << "\nNew account created successfully!" << RESET << endl << endl;
     return newPlayer;
 }
 
@@ -156,6 +159,7 @@ Player SelectAccount(Dictionary &players)
 
     cout << "\nSelect an account name: ";
     cin >> selected;
+    cout << endl;
 
     Player selectedPlayer = players.get(selected);
     return selectedPlayer;
@@ -191,12 +195,13 @@ void SPS(Dictionary& players, Player& currentPlayer)
 }
 
 
+
 int main()
 {
     //Initializations
     Dictionary players;
-    Champion selectedChampion;
     Player currentPlayer;
+    List playerQueue;
     bool continueLoop = true;
     bool accountSelected = false;
 
@@ -207,81 +212,84 @@ int main()
     //Calling Main Menu Option
     while (continueLoop)
     {
-        int option = MainMenu();
+        int option = MainMenu(accountSelected ? currentPlayer.getUsername() : "Player");
 
-        switch (option)
+        if (option == 0)
         {
-            case 0:
-            {
-                //Exit Game
-                continueLoop = false;
-                break;
-            }
-                
-            case 1:
-            {
-                // Create a new account
-                currentPlayer = CreateAccount(players);
-                accountSelected = true;
-                continue;
-            }
-                
-            case 2:
-            {
-                // Select an account
-                currentPlayer = SelectAccount(players);
-                accountSelected = true;
-                continue;
-            }
+            //Exit Game
+            continueLoop = false;
+        }
+        else if (option == 1)
+        {
+            // Create a new account
+            currentPlayer = CreateAccount(players);
+            accountSelected = true;
+        }
+        else if (option == 2)
+        {
+            // Select an account
+            currentPlayer = SelectAccount(players);
+            accountSelected = true;
+        }
+        else if (option == 3)
+        {
+            // Get player stats
 
-            case 3:
-            {
-                //Select a champion
-
-                if (accountSelected)
-                {
-                    getChampionSelection(championList, selectedChampion);
-                    selectedChampion.print();
-                    cout << "" << endl;
-                    continue;
-                }
-                else
-                {
-                    cout << "You need an account! Use option |1| to create a new account or option |2| to select one!" << endl << endl;
-                    continue;
-                }
-                
-            }
-
-            case 4:
+            if (accountSelected)
             {
                 cout << BOLDYELLOW << "---------------- Player stats ----------------" << WHITE << endl << endl;
                 currentPlayer.print();
                 cout << "" << endl;
+                continue;
             }
-
-            case 5:
+            else
             {
-
-            }
-
-            case 6:
-            {
-
-            }
-
-            case 7:
-            {
-
+                cout << RED << "No account selected! Use option |1| to create a new account or option |2| to select one!" << RESET << endl << endl;
+                continue;
             }
         }
+        else if (option == 4)
+        {
+            // Join Queue
+
+            if (accountSelected)
+            {
+                // Selected player is in player queue
+                if (playerQueue.playerInQueue(currentPlayer)) {
+                    cout << RED << "Player is already in queue!" << RESET << endl;
+                }
+                // Selected player is not in player queue (Run champion selection function)
+                else {
+                    Champion selectedChampion = getChampionSelection(championList);
+                    playerQueue.add(PlayerChampion(currentPlayer, selectedChampion));
+                    cout << BOLDGREEN << currentPlayer.getUsername() << " has joined the queue with " << selectedChampion.getType() << RESET << endl;
+                }
+            }
+        }
+        else if (option == 5)
+        {
+            // Queue status
+
+            cout << BOLDBLUE << "Number of players in queue: " << playerQueue.getLength() << RESET << endl;
+            if (accountSelected) {
+                if (playerQueue.playerInQueue(currentPlayer)) {
+                    int queueIndex = playerQueue.getPlayerQueueIndex(currentPlayer);
+                    cout << BOLDBLUE << currentPlayer.getUsername() << " is at position " << queueIndex << " in player queue " << RESET << endl << endl;
+                }
+                else {
+                    cout << RED << "Current player is not in queue!" << RESET << endl;
+                }
+            }
+            
+        }
+        else if (option == 6)
+        {
+
+        }
+        else if (option == 7)
+        {
+
+        }
     }
-    
-
-    
-
-    
-    
-    
     return 0;
 }
