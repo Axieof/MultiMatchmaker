@@ -100,3 +100,16 @@ bool List::playerInQueue(Player player) {
 	}
 	return false;
 }
+
+int List::getPlayerQueueIndex(Player player) {
+	Node* temp = firstNode;
+	int queueIndex = 1;
+	while (temp != NULL) {
+		if (temp->pc.player.getUsername() == player.getUsername()) {
+			return queueIndex;
+		}
+		temp = temp->next;
+		queueIndex++;
+	}
+	return -1;
+}

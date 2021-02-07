@@ -57,6 +57,7 @@ void readPlayersFromFile(string file_name, Dictionary &players)
     file.close();
 }
 
+// Read champion data from csv, create Champion objects and add to vector
 vector<Champion> initChampions(string file_name)
 {
     vector<Champion> champions;
@@ -86,6 +87,7 @@ vector<Champion> initChampions(string file_name)
     return champions;
 }
 
+// Display champion stats in tabular format, then prompt user to select champion
 Champion getChampionSelection(vector<Champion> championList) {
     cout << BOLDYELLOW << "---------------- Select a Champion ----------------" << WHITE << endl;
     cout << right << setw(2) << "#" << " |" << left << setw(10) << "Type" << "|" << left << setw(7) << "Attack" << "|" << left << setw(5) << "Hp" << "|" << left << setw(5) << "Heal" << "|" << left << setw(9) << "Mobility" << "|" << left << setw(6) << "Range" << endl;
@@ -115,10 +117,10 @@ Champion getChampionSelection(vector<Champion> championList) {
     return selectedChampion;
 }
 
-int MainMenu()
+int MainMenu(string username = "Player")
 {
     int option;
-    cout << BOLDYELLOW << "----------------- Welcome Player! -----------------" << WHITE << endl << endl;
+    cout << BOLDYELLOW << "----------------- Welcome " << username << "! -----------------" << WHITE << endl << endl;
     cout << "1) Create an Account" << endl;
     cout << "2) Select an Account" << endl;
     cout << "3) Get Player Stats" << endl;
@@ -143,7 +145,7 @@ Player CreateAccount(Dictionary &players)
 
     Player newPlayer = Player(username, 0, 0, 0, 0, 0);
     players.add(username, newPlayer);
-    cout << "\nNew Account Created Successfully!" << endl << endl;
+    cout << BOLDGREEN << "\nNew account created successfully!" << RESET << endl << endl;
     return newPlayer;
 }
 
@@ -157,6 +159,7 @@ Player SelectAccount(Dictionary &players)
 
     cout << "\nSelect an account name: ";
     cin >> selected;
+    cout << endl;
 
     Player selectedPlayer = players.get(selected);
     return selectedPlayer;
@@ -180,7 +183,7 @@ int main()
     //Calling Main Menu Option
     while (continueLoop)
     {
-        int option = MainMenu();
+        int option = MainMenu(accountSelected ? currentPlayer.getUsername() : "Player");
 
         if (option == 0)
         {
@@ -222,13 +225,15 @@ int main()
 
             if (accountSelected)
             {
+                // Selected player is in player queue
                 if (playerQueue.playerInQueue(currentPlayer)) {
                     cout << RED << "Player is already in queue!" << RESET << endl;
                 }
+                // Selected player is not in player queue (Run champion selection function)
                 else {
                     Champion selectedChampion = getChampionSelection(championList);
                     playerQueue.add(PlayerChampion(currentPlayer, selectedChampion));
-                    cout << GREEN << currentPlayer.getUsername() << " has joined the queue with " << selectedChampion.getType() << RESET << endl;
+                    cout << BOLDGREEN << currentPlayer.getUsername() << " has joined the queue with " << selectedChampion.getType() << RESET << endl;
                 }
             }
         }
@@ -236,8 +241,16 @@ int main()
         {
             // Queue status
 
-            cout << "Number of players in queue: " << playerQueue.getLength() << endl;
-            playerQueue.print();
+            cout << BOLDBLUE << "Number of players in queue: " << playerQueue.getLength() << RESET << endl;
+            if (accountSelected) {
+                if (playerQueue.playerInQueue(currentPlayer)) {
+                    int queueIndex = playerQueue.getPlayerQueueIndex(currentPlayer);
+                    cout << BOLDBLUE << currentPlayer.getUsername() << " is at position " << queueIndex << " in player queue " << RESET << endl << endl;
+                }
+                else {
+                    cout << RED << "Current player is not in queue!" << RESET << endl;
+                }
+            }
             
         }
         else if (option == 6)
