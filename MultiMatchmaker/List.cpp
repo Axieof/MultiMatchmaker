@@ -28,6 +28,7 @@ bool List::add(PlayerChampion playerchampion){
 	}
 	else {
 		Node* current = firstNode;
+
 		while (current->next != NULL) {
 			current = current->next;
 		}
@@ -40,21 +41,17 @@ bool List::add(PlayerChampion playerchampion){
 void List::remove(int index) {
 	if (index >= 0 && index < size) {
 		if (index == 0) {
-			Node* temp = firstNode;
-			temp->next = NULL;
-			delete temp;
 			firstNode = firstNode->next;
 		}
 		else {
-			Node* current = firstNode;
-			for (int i = 0; i < index - 1; i++)
-			{
-				current = current->next;
+			Node* temp = firstNode;
+			for (int i = 0; i < index - 1; i++) {
+				temp = temp->next;
 			}
-			Node* temp = current;
-			temp->next = NULL;
-			delete temp;
-			current->next = current->next->next;
+			Node* previous = temp;
+			Node* deleteNode = temp->next;
+
+			previous->next = deleteNode->next;
 		}
 		size--;
 	}
@@ -109,6 +106,20 @@ int List::getPlayerQueueIndex(Player player) {
 			return queueIndex;
 		}
 		temp = temp->next;
+		queueIndex++;
+	}
+	return -1;
+}
+
+int List::searchNext(Champion champion) {
+	Champion firstChampion = firstNode->pc.champion;
+	Node* current = firstNode->next;
+	int queueIndex = 2;
+	while (current != NULL) {
+		if (current->pc.champion.getType() == champion.getType()) {
+			return queueIndex;
+		}
+		current = current->next;
 		queueIndex++;
 	}
 	return -1;

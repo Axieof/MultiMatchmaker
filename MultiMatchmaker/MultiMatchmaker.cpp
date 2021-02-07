@@ -8,7 +8,7 @@
 #include <string>
 #include <fstream> // read and write to files
 #include <vector> // store the string
-#include <sstream>// stringstream
+#include <sstream> // stringstream
 #include <stdio.h>
 #include "List.h"
 #include "Dictionary.h"
@@ -126,7 +126,8 @@ int MainMenu(string username = "Player")
     cout << "3) Get Player Stats" << endl;
     cout << "4) Join Queue" << endl;
     cout << "5) Queue Status" << endl;
-    cout << "6) Leave Queue" << endl;
+    cout << "6) Change Champion" << endl;
+    cout << "7) Leave Queue" << endl;
     cout << "0) Leave Game" << endl << endl;
 
     cout << "Enter an option: ";
@@ -175,6 +176,8 @@ int main()
     List playerQueue;
     bool continueLoop = true;
     bool accountSelected = false;
+    vector<PlayerChampion> team1;
+    vector<PlayerChampion> team2;
 
     //Reading CSV Data
     readPlayersFromFile("../Players.csv", players);
@@ -188,7 +191,21 @@ int main()
         if (option == 0)
         {
             //Exit Game
-            continueLoop = false;
+            //continueLoop = false;
+            Player p1 = Player("a", 0, 0, 0, 0, 0);
+            Player p2 = Player("b", 0, 0, 0, 0, 0);
+            Player p3 = Player("c", 0, 0, 0, 0, 0);
+            Player p4 = Player("d", 0, 0, 0, 0, 0);
+            Player p5 = Player("e", 0, 0, 0, 0, 0);
+            playerQueue.add(PlayerChampion(p1, championList[0]));
+            playerQueue.add(PlayerChampion(p2, championList[1]));
+            playerQueue.add(PlayerChampion(p3, championList[2]));
+            playerQueue.add(PlayerChampion(p4, championList[0]));
+            playerQueue.add(PlayerChampion(p5, championList[2]));
+            
+            cout << "--------------------------------------" << endl;
+            playerQueue.get(0).champion.print();
+            cout << "NEXT: " << playerQueue.searchNext(playerQueue.get(0).champion) << endl;;
         }
         else if (option == 1)
         {
@@ -211,12 +228,10 @@ int main()
                 cout << BOLDYELLOW << "---------------- Player stats ----------------" << WHITE << endl << endl;
                 currentPlayer.print();
                 cout << "" << endl;
-                continue;
             }
             else
             {
                 cout << RED << "No account selected! Use option |1| to create a new account or option |2| to select one!" << RESET << endl << endl;
-                continue;
             }
         }
         else if (option == 4)
@@ -234,7 +249,13 @@ int main()
                     Champion selectedChampion = getChampionSelection(championList);
                     playerQueue.add(PlayerChampion(currentPlayer, selectedChampion));
                     cout << BOLDGREEN << currentPlayer.getUsername() << " has joined the queue with " << selectedChampion.getType() << RESET << endl;
+
+                    cout << "---------------------------------------------------" << endl;
+                    
                 }
+            }
+            else {
+                cout << RED << "No account selected! Use option |1| to create a new account or option |2| to select one!" << RESET << endl << endl;
             }
         }
         else if (option == 5)
@@ -251,16 +272,53 @@ int main()
                     cout << RED << "Current player is not in queue!" << RESET << endl;
                 }
             }
-            
         }
         else if (option == 6)
         {
+            // Change champion
+            if (accountSelected) {
+                if (playerQueue.playerInQueue(currentPlayer)) {
+                    cout << RED << "Are you sure you want to change champion? You will leave the queue and be added at the back! [Y/N]: " << RESET;
+                    string confirmChange;
+                    cin >> confirmChange;
 
+                    if (confirmChange == "Y") {
+                        playerQueue.remove(playerQueue.getPlayerQueueIndex(currentPlayer) - 1);
+                        Champion selectedChampion = getChampionSelection(championList);
+                        playerQueue.add(PlayerChampion(currentPlayer, selectedChampion));
+                        cout << BOLDGREEN << currentPlayer.getUsername() << " has joined the queue with " << selectedChampion.getType() << RESET << endl;
+                    }
+                }
+                else {
+                    cout << RED << "Current player is not in queue!" << RESET << endl;
+                }
+            }
+            else {
+                cout << RED << "No account selected! Use option |1| to create a new account or option |2| to select one!" << RESET << endl << endl;
+            }
         }
         else if (option == 7)
         {
+            // Leave queue
+            if (accountSelected) {
+                if (playerQueue.playerInQueue(currentPlayer)) {
+                    cout << RED << "Are you sure you want to leave the queue? [Y/N]: " << RESET;
+                    string confirmLeave;
+                    cin >> confirmLeave;
 
+                    if (confirmLeave == "Y") {
+                        playerQueue.remove(playerQueue.getPlayerQueueIndex(currentPlayer) - 1);
+                    }
+                }
+                else {
+                    cout << RED << "Current player is not in queue!" << RESET << endl;
+                }
+            }
+            else {
+                cout << RED << "No account selected! Use option |1| to create a new account or option |2| to select one!" << RESET << endl << endl;
+            }
         }
+
     }
     return 0;
 }

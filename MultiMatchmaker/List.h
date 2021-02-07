@@ -39,6 +39,6 @@ public:
 
 	int getPlayerQueueIndex(Player);
 
-	//PlayerChampion searchNext(Champion champion);
+	int searchNext(Champion champion);
 };
 
