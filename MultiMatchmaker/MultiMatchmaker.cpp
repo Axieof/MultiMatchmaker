@@ -482,11 +482,11 @@ int main()
         }
         else if (option == 8)
         {
-            Player p1 = Player("a", 0, 0, 0, 0, 0);
-            Player p2 = Player("b", 0, 0, 0, 0, 0);
-            Player p3 = Player("c", 0, 0, 0, 0, 0);
-            Player p4 = Player("d", 0, 0, 0, 0, 0);
-            Player p5 = Player("e", 0, 0, 0, 0, 0);
+            Player p1 = Player("Andy", 0, 0, 0, 0, 0);
+            Player p2 = Player("Ben", 0, 0, 0, 0, 0);
+            Player p3 = Player("Charlie", 0, 0, 0, 0, 0);
+            Player p4 = Player("Delta", 0, 0, 0, 0, 0);
+            Player p5 = Player("Eddie", 0, 0, 0, 0, 0);
             playerQueue.add(PlayerChampion(p1, championList[0]));
             playerQueue.add(PlayerChampion(p2, championList[1]));
             playerQueue.add(PlayerChampion(p3, championList[2]));
@@ -543,17 +543,17 @@ int main()
         }
         else if (option == 12)
         {
-            Player p1 = Player("a", 0, 0, 0, 0, 0);
+            Player p1 = Player("Alice", 0, 0, 0, 0, 0);
             PlayerChampion pc = PlayerChampion(p1, championList[0]);
-            Player p2 = Player("b", 0, 0, 0, 0, 0);
+            Player p2 = Player("Bob", 0, 0, 0, 0, 0);
             PlayerChampion pc2 = PlayerChampion(p2, championList[1]);
-            Player p3 = Player("c", 0, 0, 0, 0, 0);
+            Player p3 = Player("Carly", 0, 0, 0, 0, 0);
             PlayerChampion pc3 = PlayerChampion(p3, championList[1]);
-            Player p4 = Player("d", 0, 0, 0, 0, 0);
+            Player p4 = Player("Danny", 0, 0, 0, 0, 0);
             PlayerChampion pc4 = PlayerChampion(p4, championList[0]);
-            Player p5 = Player("e", 0, 0, 0, 0, 0);
+            Player p5 = Player("Ethan", 0, 0, 0, 0, 0);
             PlayerChampion pc5 = PlayerChampion(p5, championList[2]);
-            Player p6 = Player("f", 0, 0, 0, 0, 0);
+            Player p6 = Player("Felix", 0, 0, 0, 0, 0);
             PlayerChampion pc6 = PlayerChampion(p6, championList[0]);
             /*Player p7 = Player("g", 0, 0, 0, 0, 0);
             PlayerChampion pc7 = PlayerChampion(p7, championList[1]);
