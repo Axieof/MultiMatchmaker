@@ -13,9 +13,9 @@ off a linked list, for a more efficient version of the matchmaking algorithm.
 
 ## Usage
 
-  *Step 1) Clone the repository
-  *Step 2) Run the program
-  *Step 3) Follow the steps on the Main Menu UI to use the system
+  * Step 1) Clone the repository
+  * Step 2) Run the program
+  * Step 3) Follow the steps on the Main Menu UI to use the system
 
 ## Options
 
