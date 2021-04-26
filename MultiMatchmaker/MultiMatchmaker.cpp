@@ -1,6 +1,9 @@
 // MultiMatchmaker.cpp : This file contains the 'main' function. Program execution begins and ends there.
 // Done by Caleb & Pritheev
 // DSA Assignment
+// School Project for Ngee Ann Polytechnic
+// School of ICT
+// Credit if any parts of the code are used
 
 // Imports
 #include <iostream>
@@ -19,14 +22,18 @@
 #include "Web.h"
 using namespace std;
 
+// Read a list of existing players from a CSV file
 void readPlayersFromFile(string file_name, Dictionary &players)
 {
+    // Open file
     ifstream file;
     file.open(file_name);
 
+    // Initialize variables
     string name, matchCount, matchesWon, matchesLoss, winRate, skillLevel;
     int count = 0;
 
+    // Loop through file
     while (getline(file, name, ','))
     {
         count += 1;
@@ -54,11 +61,13 @@ void readPlayersFromFile(string file_name, Dictionary &players)
 // Read champion data from csv, create Champion objects and add to vector
 vector<Champion> initChampions(string file_name)
 {
-    vector<Champion> champions;
 
+    // Open file
     ifstream file;
     file.open(file_name);
 
+    // Initialize variables
+    vector<Champion> champions;
     string type, attack, hp, healing, mobility, range;
 
     string header;
@@ -111,6 +120,7 @@ Champion getChampionSelection(vector<Champion> championList) {
     return selectedChampion;
 }
 
+// Main menu displayed to user
 int MainMenu(string username = "Player")
 {
     int option;
@@ -142,6 +152,7 @@ int MainMenu(string username = "Player")
     return option;
 }
 
+// Create new account and add it to lsit of existing players
 Player CreateAccount(Dictionary &players)
 {
     string username;
@@ -165,6 +176,7 @@ Player CreateAccount(Dictionary &players)
     return newPlayer;
 }
 
+// Select account from lsit of existing users
 Player SelectAccount(Dictionary &players)
 {
     string selected;
@@ -181,6 +193,7 @@ Player SelectAccount(Dictionary &players)
     return selectedPlayer;
 }
 
+// Update currently seelcted user account
 void UpdatePlayer(Player& currentPlayer)
 {
     int matcheswon = currentPlayer.getMatchWon();
@@ -200,6 +213,7 @@ void UpdatePlayer(Player& currentPlayer)
     }
 }
 
+// Update player scores
 void Update(int _matchcount, int _matchwon, int _matchloss, Player &player)
 {
     player.setMatchCount(_matchcount);
@@ -207,6 +221,7 @@ void Update(int _matchcount, int _matchwon, int _matchloss, Player &player)
     player.setMatchLoss(_matchloss);
 }
 
+// Randomize who wins when players face off
 void RandomMatchResult(Player &p1, Player &p2, Player &p3, Player &p4)
 {
     int team1result = rand() % 2;
@@ -240,6 +255,7 @@ void RandomMatchResult(Player &p1, Player &p2, Player &p3, Player &p4)
     UpdatePlayer(p4);
 }
 
+// Matchmake players based on champion
 void matchPlayers(List& playerQueue, vector<PlayerChampion>& team1, vector<PlayerChampion>& team2) {
     playerQueue.print(); //temp
 
@@ -290,6 +306,7 @@ void matchPlayers(List& playerQueue, vector<PlayerChampion>& team1, vector<Playe
     }
 }
 
+// Use web data structure to match players based on class
 void webMatchPlayers(Web& web, vector<PlayerChampion>& team1, vector<PlayerChampion>& team2) {
     web.print(); //temp
 
@@ -340,6 +357,7 @@ void webMatchPlayers(Web& web, vector<PlayerChampion>& team1, vector<PlayerChamp
     }
 }
 
+// Main loop
 int main()
 {
     //Initializations
