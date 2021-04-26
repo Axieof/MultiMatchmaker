@@ -1,3 +1,10 @@
+// Champion.cpp : This file contains the data and class structue for the champion class
+// Done by Caleb & Pritheev
+// DSA Assignment
+// School Project for Ngee Ann Polytechnic
+// School of ICT
+// Credit if any parts of the code are used
+
 #include <iostream>
 #include <string>
 #include "Champion.h"

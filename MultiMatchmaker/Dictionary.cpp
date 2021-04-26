@@ -1,3 +1,10 @@
+// Dictionary.cpp : This file contains data and class structure for the dictionary data structure
+// Done by Caleb & Pritheev
+// DSA Assignment
+// School Project for Ngee Ann Polytechnic
+// School of ICT
+// Credit if any parts of the code are used
+
 #include <iomanip>
 #include "Dictionary.h"
 using namespace std;

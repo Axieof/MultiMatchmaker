@@ -1,3 +1,10 @@
+// List.cpp : This file contains the data and class structure for the linked list data structure
+// Done by Caleb & Pritheev
+// DSA Assignment
+// School Project for Ngee Ann Polytechnic
+// School of ICT
+// Credit if any parts of the code are used
+
 #include<string>
 #include<iostream>
 #include "List.h"

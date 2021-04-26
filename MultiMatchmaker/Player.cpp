@@ -1,3 +1,10 @@
+// Player.cpp : This file contains the class structure for the player class
+// Done by Caleb & Pritheev
+// DSA Assignment
+// School Project for Ngee Ann Polytechnic
+// School of ICT
+// Credit if any parts of the code are used
+
 #include "Player.h"
 using namespace std;
 
