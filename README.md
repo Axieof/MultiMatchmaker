@@ -8,14 +8,14 @@ to create a matchmaking algorithm.
 # Description
 
 This project makes use of a linked list implementation for the basic matchmaking algorithm.
-It also features a custom Web data structure created by Pritheev AKA [@Axieof](https://github.com/Axieof "Pritheev's Profile") and Caleb AKA [@calebanana](https://github.com/calebanana "Caleb's Profile"), which is based 
+It also features a custom Web data structure created by **Pritheev** AKA [@Axieof](https://github.com/Axieof "Pritheev's Profile") and **Caleb** AKA [@calebanana](https://github.com/calebanana "Caleb's Profile"), which is based 
 off a linked list, for a more efficient version of the matchmaking algorithm.
 
 ## Usage
 
-Step 1) Clone the repository
-Step 2) Run the program
-Step 3) Follow the steps on the Main Menu UI to use the system
+*Step 1) Clone the repository
+*Step 2) Run the program
+*Step 3) Follow the steps on the Main Menu UI to use the system
 
 ## Options
 
