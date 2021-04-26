@@ -11,6 +11,25 @@ This project makes use of a linked list implementation for the basic matchmaking
 It also features a custom Web data structure created by **Pritheev** AKA [@Axieof](https://github.com/Axieof "Pritheev's Profile") and **Caleb** AKA [@calebanana](https://github.com/calebanana "Caleb's Profile"), which is based 
 off a linked list, for a more efficient version of the matchmaking algorithm.
 
+# Application
+
+The application allows users to have an account with statistics such as username, matches won, lost and win rate. Players are given the option to join the matchmaking queue, where they will be first given the option to pick from seven different champion types. After champion selection, players are put into a matchmaking queue which will assign them into teams of two based on champion type.
+The application makes use of hash tables to hash and store the players as well as a linked list to act as a queue for players.
+
+# Data Structures
+
+1. Hash Table
+
+   - A hash table is used to store various objects, so as to make searching for objects faster and more efficient   
+
+3. Linked list
+
+   - A linked list is used to store the players in nodes, and the program uses it as a basic matchmaking system by traversing through and finding the best match for a player who just entered the match   
+   
+5. Web
+
+   - A custom advanced linked list that stores players similarly to the basic implementatin, but also stores in extending links information such as the next player with the same champion   
+
 ## Usage
 
   * Step 1) Clone the repository
