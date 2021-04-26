@@ -21,14 +21,17 @@ The application makes use of hash tables to hash and store the players as well a
 1. Hash Table
 
    - A hash table is used to store various objects, so as to make searching for objects faster and more efficient   
+![alt text](https://github.com/Axieof/MultiMatchmaker/blob/master/Images/HashTable.png "Hash Table Visualization")
 
 3. Linked list
 
    - A linked list is used to store the players in nodes, and the program uses it as a basic matchmaking system by traversing through and finding the best match for a player who just entered the match   
+![alt text](https://github.com/Axieof/MultiMatchmaker/blob/master/Images/LinkedList.png "Linked List Visualization")
    
 5. Web
 
    - A custom advanced linked list that stores players similarly to the basic implementatin, but also stores in extending links information such as the next player with the same champion   
+![alt text](https://github.com/Axieof/MultiMatchmaker/blob/master/Images/Web.png "Web Visualization")  
 
 ## Usage
 
