@@ -1,3 +1,10 @@
+// Player.h : This file contains the header information for the player class structure
+// Done by Caleb & Pritheev
+// DSA Assignment
+// School Project for Ngee Ann Polytechnic
+// School of ICT
+// Credit if any parts of the code are used
+
 #pragma once
 #include<string>
 #include<iostream>

@@ -1,3 +1,10 @@
+// Colours.h : This file contains the header information for the colours used for the Main Menu UI
+// Done by Caleb & Pritheev
+// DSA Assignment
+// School Project for Ngee Ann Polytechnic
+// School of ICT
+// Credit if any parts of the code are used
+
 #pragma once
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */
