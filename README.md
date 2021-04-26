@@ -8,7 +8,7 @@ to create a matchmaking algorithm.
 # Description
 
 This project makes use of a linked list implementation for the basic matchmaking algorithm.
-It also features a custom Web data structure created by @Axieof and @calebanana, which is based 
+It also features a custom Web data structure created by [Pritheev AKA @Axieof](https://github.com/Axieof "Pritheev's Profile") and [Caleb AKA @calebanana](https://github.com/calebanana "Caleb's Profile"), which is based 
 of a linked list, for a more efficient version of the matchmaking algorithm.
 
 ## Usage
